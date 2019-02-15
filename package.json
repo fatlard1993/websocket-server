@@ -19,8 +19,9 @@
   "devDependencies": {
     "babel-eslint": "^10.0.1",
     "eslint": "^5.13.0"
-	},
-	"dependencies": {
-    "log": "github:fatlard1993/log"
-	}
+  },
+  "dependencies": {
+    "log": "github:fatlard1993/log",
+    "ws": "^6.1.3"
+  }
 }
