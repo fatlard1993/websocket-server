@@ -3,11 +3,11 @@ const url = require('url');
 const WebSocket = require('ws');
 const log = require('log');
 
-module.exports = class SocketServer extends WebSocket.Server {
+module.exports = class WebsocketServer extends WebSocket.Server {
 	constructor({ server, socketPath = '/api', ...settings }){
 		super({ noServer: !!server, ...settings });
 
-		if(!server) return log.error('SocketServer requires a http server!');
+		if(!server) return log.error('[websocket-server] requires a http server!');
 
 		server.on('upgrade', (request, socket, head) => {
 			const pathname = url.parse(request.url).pathname;
@@ -59,7 +59,7 @@ module.exports = class SocketServer extends WebSocket.Server {
 
 		var message = JSON.stringify({ type, payload });
 
-		log.warn(`Websocket broadcast: ${message}`);
+		log.warn(`[websocket-server] broadcast: ${message}`);
 
 		this.clients.forEach(function eachClient(client){
 			if(client.readyState === WebSocket.OPEN) client.send(message);
@@ -81,7 +81,7 @@ module.exports = class SocketServer extends WebSocket.Server {
 			// promise.catch((error) => log.error()(error));
 		};
 
-		log()('Applying handler: ', name);
+		log(1)('[websocket-server] Applying handler: ', name);
 
 		this.on(name, handler);
 
