@@ -25,7 +25,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 			socket.reply = (type, payload) => {
 				var message = JSON.stringify({ type, payload });
 
-				log.warn('Send to client socket: ', message);
+				log.warn('[websocket-server] send to client socket: ', message);
 
 				if(socket.readyState === WebSocket.OPEN) socket.send(message);
 
@@ -33,12 +33,12 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 			};
 
 			socket.on('message', (data) => {
-				log('Client socket message: ', data);
+				log('[websocket-server] client socket message: ', data);
 
 				try{ data = JSON.parse(data); }
 
 				catch(e){
-					log.error(data);
+					log.error('[websocket-server]', data);
 
 					throw e;
 				}
@@ -55,7 +55,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 	}
 
 	broadcast(type, payload){
-		if(!this.clients.size) return log.warn(1)('No clients to broadcast to');
+		if(!this.clients.size) return log.warn(1)('[websocket-server] no clients to broadcast');
 
 		var message = JSON.stringify({ type, payload });
 
@@ -68,7 +68,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 
 	createEndpoint(name, getResponse){
 		const handler = (payload) => {
-			log('Endpoint handler: ', name, payload);
+			log('[websocket-server] endpoint handler: ', name, payload);
 
 			var res = getResponse(payload);
 
@@ -81,7 +81,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 			// promise.catch((error) => log.error()(error));
 		};
 
-		log(1)('[websocket-server] Applying handler: ', name);
+		log(1)('[websocket-server] applying handler: ', name);
 
 		this.on(name, handler);
 
