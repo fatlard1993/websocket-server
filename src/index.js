@@ -67,12 +67,12 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 	}
 
 	createEndpoint(name, getResponse){
-		const handler = (payload) => {
+		const handler = (payload, socket) => {
 			log('[websocket-server] endpoint handler: ', name, payload);
 
-			var res = getResponse(payload);
+			var res = getResponse(payload, socket);
 
-			this.broadcast(name, res);
+			if(res) this.broadcast(name, res);
 
 			// const promise = Promise.resolve();
 
@@ -86,5 +86,9 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 		this.on(name, handler);
 
 		return { destroy: () => this.removeListener(name, handler) };
+	}
+
+	registerEndpoints(endpoints){
+		Object.keys(endpoints).forEach((name) => { this.createEndpoint(name, endpoints[name]); });
 	}
 };
