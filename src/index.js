@@ -48,9 +48,11 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 				this.emit(type, payload, socket);
 			});
 
-			socket.on('close', () => {
-				this.emit('client_disconnect', socket.id);
+			socket.on('close', (data) => {
+				this.emit('client_disconnect', null, data);
 			});
+
+			this.emit('client_connect', null, socket);
 		});
 	}
 
@@ -88,7 +90,9 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 		return { destroy: () => this.removeListener(name, handler) };
 	}
 
-	registerEndpoints(endpoints){
+	registerEndpoints(){
+		var endpoints = Object.assign(...arguments);
+
 		Object.keys(endpoints).forEach((name) => { this.createEndpoint(name, endpoints[name]); });
 	}
 };
