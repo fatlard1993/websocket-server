@@ -68,19 +68,11 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 		});
 	}
 
-	createEndpoint(name, getResponse){
+	createEndpoint(name, endpointHandler){
 		const handler = (payload, socket) => {
 			log(1)('[websocket-server] endpoint handler: ', name, payload);
 
-			var res = getResponse.call(socket, payload, socket);
-
-			if(res) this.broadcast(name, res);
-
-			// const promise = Promise.resolve();
-
-			// promise.then(() => getResponse(payload));
-			// // promise.then((data) => this.emit(name, data));
-			// promise.catch((error) => log.error()(error));
+			endpointHandler.call(socket, payload);
 		};
 
 		log(1)('[websocket-server] applying handler: ', name);
