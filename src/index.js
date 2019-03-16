@@ -72,7 +72,9 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 		const handler = (payload, socket) => {
 			log(1)('[websocket-server] endpoint handler: ', name, payload);
 
-			endpointHandler.call(socket, payload);
+			var response = endpointHandler.call(socket, payload);
+
+			if(response) socket.reply(name, response);
 		};
 
 		log(1)('[websocket-server] applying handler: ', name);
