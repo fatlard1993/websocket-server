@@ -20,12 +20,14 @@
 		"extends": "rules"
 	},
 	"devDependencies": {
-		"babel-eslint": "^10.0.1",
-		"eslint": "^5.15.1",
 		"eslint-config-rules": "github:fatlard1993/eslint-config-rules"
 	},
 	"dependencies": {
-		"log": "github:fatlard1993/log",
 		"ws": "^6.1.3"
+	},
+	"peerDependencies": {
+		"babel-eslint": ">= 10",
+		"eslint": ">= 5",
+		"log": "github:fatlard1993/log"
 	}
 }
