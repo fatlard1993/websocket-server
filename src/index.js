@@ -61,7 +61,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 
 		var message = JSON.stringify({ type, payload });
 
-		log.warn(`[websocket-server] broadcast: ${message}`);
+		log.warn(2)(`[websocket-server] broadcast: ${message}`);
 
 		this.clients.forEach(function eachClient(client){
 			if(client.readyState === WebSocket.OPEN) client.send(message);
