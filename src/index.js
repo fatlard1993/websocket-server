@@ -74,7 +74,11 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 
 			var response = endpointHandler.call(socket, payload);
 
-			if(response) socket.reply(name, response);
+			if(response){
+				log.warn(`[websocket-server] auto-respond ${name} : ${response}`);
+
+				socket.reply(name, response);
+			}
 		};
 
 		log(1)('[websocket-server] applying handler: ', name);
