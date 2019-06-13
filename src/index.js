@@ -45,8 +45,8 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 					this.emit(type, payload, socket);
 				}
 
-				catch(e){
-					log.warn('[websocket-server] Unable to parse as JSON: ', data);
+				catch(err){
+					log.warn('[websocket-server] Unable to parse as JSON: ', data, err);
 				}
 			});
 
