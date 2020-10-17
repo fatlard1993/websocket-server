@@ -1,7 +1,7 @@
 const url = require('url');
 
 const WebSocket = require('ws');
-const log = require('log');
+const log = new (require('log'))({ tag: 'websocket-server' });
 
 module.exports = class WebsocketServer extends WebSocket.Server {
 	constructor({ server, socketPath = '/api', ...settings }){
