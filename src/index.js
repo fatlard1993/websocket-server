@@ -7,7 +7,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 	constructor({ server, socketPath = '/api', ...settings }){
 		super({ noServer: !!server, ...settings });
 
-		if(!server) return log.error('[websocket-server] Requires a http server!');
+		if(!server) return log.error('Requires a http server!');
 
 		server.on('upgrade', (request, socket, head) => {
 			const pathname = url.parse(request.url).pathname;
@@ -25,7 +25,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 			socket.reply = (type, payload) => {
 				var message = JSON.stringify({ type, payload });
 
-				log.warn(4)('[websocket-server] Send to client socket: ', message);
+				log.warn(4)('Send to client socket: ', message);
 
 				if(socket.readyState === WebSocket.OPEN) socket.send(message);
 
@@ -33,7 +33,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 			};
 
 			socket.on('message', (data) => {
-				log(1)('[websocket-server] Client socket message: ', data);
+				log(1)('Client socket message: ', data);
 
 				this.emit('raw', data, socket);
 
@@ -46,7 +46,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 				}
 
 				catch(err){
-					log.warn('[websocket-server] Unable to parse as JSON: ', data, err);
+					log.warn('Unable to parse as JSON: ', data, err);
 				}
 			});
 
@@ -59,11 +59,11 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 	}
 
 	broadcast(type, payload){
-		if(!this.clients.size) return log.warn(1)('[websocket-server] No clients to broadcast');
+		if(!this.clients.size) return log.warn(1)('No clients to broadcast');
 
 		var message = JSON.stringify({ type, payload });
 
-		log.warn(4)(`[websocket-server] Broadcast: ${message}`);
+		log.warn(4)(`Broadcast: ${message}`);
 
 		this.clients.forEach(function eachClient(client){
 			if(client.readyState === WebSocket.OPEN) client.send(message);
@@ -72,18 +72,18 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 
 	createEndpoint(name, endpointHandler){
 		const handler = (payload, socket) => {
-			log(4)('[websocket-server] Endpoint handler: ', name, payload);
+			log(4)('Endpoint handler: ', name, payload);
 
 			var response = endpointHandler.call(socket, payload);
 
 			if(response){
-				log.warn(`[websocket-server] Auto-respond ${name} : ${response}`);
+				log.warn(`Auto-respond ${name} : ${response}`);
 
 				socket.reply(name, response);
 			}
 		};
 
-		log(1)('[websocket-server] Applying handler: ', name);
+		log(1)('Applying handler: ', name);
 
 		this.on(name, handler);
 
