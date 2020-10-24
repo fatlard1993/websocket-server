@@ -4,6 +4,8 @@ const WebSocket = require('ws');
 const log = new (require('log'))({ tag: 'websocket-server' });
 
 module.exports = class WebsocketServer extends WebSocket.Server {
+	static get OPEN(){ return WebSocket.OPEN; }
+
 	constructor({ server, socketPath = '/api', ...settings }){
 		super({ noServer: !!server, ...settings });
 
@@ -96,3 +98,5 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 		Object.keys(endpoints).forEach((name) => { this.createEndpoint(name, endpoints[name]); });
 	}
 };
+
+// WebsocketServer.prototype.OPEN = WebSocket.OPEN;
