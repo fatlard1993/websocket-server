@@ -22,10 +22,10 @@
 	"devDependencies": {
 		"eslint-config-rules": "github:fatlard1993/eslint-config-rules#2.x.x",
 		"babel-eslint": "^10.1.0",
-		"eslint": "^7.11.0"
+		"eslint": "^7.19.0"
 	},
 	"dependencies": {
 		"log": "github:fatlard1993/log#3.x.x",
-		"ws": "^7.3.1"
+		"ws": "^7.4.3"
 	}
 }
