@@ -98,5 +98,3 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 		Object.keys(endpoints).forEach((name) => { this.createEndpoint(name, endpoints[name]); });
 	}
 };
-
-// WebsocketServer.prototype.OPEN = WebSocket.OPEN;
