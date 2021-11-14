@@ -1,10 +1,14 @@
 module.exports = {
 	env: {
 		es6: true,
-		node: true
+		node: true,
 	},
 	parserOptions: {
-		ecmaVersion: 9
+		sourceType: 'module',
+		ecmaVersion: 2020,
 	},
-	extends: 'eslint:recommended'
+	extends: ['eslint:recommended', 'plugin:prettier/recommended'],
+	rules: {
+		'no-async-promise-executor': 'off',
+	},
 };

@@ -1,2 +1,3 @@
 # websocket-server
-A simple node.js websocket server
+
+A node.js WebSocket.Server wrapper

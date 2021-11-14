@@ -1,26 +1,38 @@
 {
 	"name": "websocket-server",
 	"version": "2.2.0",
+	"main": "websocketServer.js",
 	"description": "A simple node.js websocket server",
-	"main": "src/index.js",
+	"author": "justfatlard",
+	"license": "ISC",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"lint": "eslint",
+		"lint:fix": "eslint --fix --ext .js .",
+		"pretty": "prettier --write ."
 	},
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/fatlard1993/websocket-server.git"
 	},
-	"author": "fatlard1993",
-	"license": "ISC",
 	"bugs": {
 		"url": "https://github.com/fatlard1993/websocket-server/issues"
 	},
 	"homepage": "https://github.com/fatlard1993/websocket-server#readme",
-	"devDependencies": {
-		"eslint": "^7.19.0"
-	},
 	"dependencies": {
-		"log": "github:fatlard1993/log#3.x.x",
-		"ws": "^7.4.3"
+		"log": "github:fatlard1993/log",
+		"ws": "^8.2.3"
+	},
+	"devDependencies": {
+		"eslint": "^8.2.0",
+		"eslint-config-prettier": "^8.3.0",
+		"eslint-plugin-cypress": "^2.12.1",
+		"eslint-plugin-prettier": "^4.0.0",
+		"husky": "^7.0.4",
+		"lint-staged": "^12.0.1",
+		"prettier": "2.4.1"
+	},
+	"lint-staged": {
+		"**/*": "prettier --write --ignore-unknown"
 	}
 }
