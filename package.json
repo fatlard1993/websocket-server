@@ -1,6 +1,6 @@
 {
 	"name": "websocket-server",
-	"version": "2.3.0",
+	"version": "2.3.1",
 	"main": "websocketServer.js",
 	"description": "A simple node.js websocket server",
 	"author": "justfatlard",
