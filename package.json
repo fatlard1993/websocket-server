@@ -20,19 +20,13 @@
 	},
 	"homepage": "https://github.com/fatlard1993/websocket-server#readme",
 	"dependencies": {
-		"log": "github:fatlard1993/log",
-		"ws": "^8.2.3"
+		"ws": "^8.11.0"
 	},
 	"devDependencies": {
-		"eslint": "^8.2.0",
-		"eslint-config-prettier": "^8.3.0",
+		"eslint": "^8.28.0",
+		"eslint-config-prettier": "^8.5.0",
 		"eslint-plugin-cypress": "^2.12.1",
-		"eslint-plugin-prettier": "^4.0.0",
-		"husky": "^7.0.4",
-		"lint-staged": "^12.0.1",
-		"prettier": "2.4.1"
-	},
-	"lint-staged": {
-		"**/*": "prettier --write --ignore-unknown"
+		"eslint-plugin-prettier": "^4.2.1",
+		"prettier": "2.7.1"
 	}
 }

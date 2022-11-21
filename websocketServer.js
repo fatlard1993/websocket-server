@@ -1,9 +1,6 @@
 const url = require('url');
 
-const { Log } = require('log');
-
 const WebSocket = require('ws');
-const log = new Log({ tag: 'websocket-server' });
 
 module.exports = class WebsocketServer extends WebSocket.Server {
 	static get OPEN() {
@@ -29,15 +26,10 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 			socket.reply = (type, payload) => {
 				const message = JSON.stringify({ type, payload });
 
-				log.warn(4)('Send to client socket: ', message);
-
 				if (socket.readyState === WebSocket.OPEN) socket.send(message);
-				else log.error('Client not connected');
 			};
 
 			socket.on('message', data => {
-				log(1)('Client socket message: ', data);
-
 				this.emit('raw', data, socket);
 
 				try {
@@ -45,7 +37,7 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 
 					this.emit(type, payload, socket);
 				} catch (err) {
-					log.warn('Unable to parse as JSON: ', data, err);
+					console.error(err);
 				}
 			});
 
@@ -58,11 +50,9 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 	}
 
 	broadcast(type, payload) {
-		if (!this.clients.size) return log.warn(1)('No clients to broadcast');
+		if (!this.clients.size) return;
 
 		const message = JSON.stringify({ type, payload });
-
-		log.warn(4)(`Broadcast: ${message}`);
 
 		this.clients.forEach(function eachClient(client) {
 			if (client.readyState === WebSocket.OPEN) client.send(message);
@@ -71,18 +61,12 @@ module.exports = class WebsocketServer extends WebSocket.Server {
 
 	createEndpoint(name, endpointHandler) {
 		const handler = (payload, socket) => {
-			log(4)('Endpoint handler: ', name, payload);
-
 			const response = endpointHandler.call(socket, payload);
 
 			if (response) {
-				log.warn(`Auto-respond ${name} : ${response}`);
-
 				socket.reply(name, response);
 			}
 		};
-
-		log(1)('Applying handler: ', name);
 
 		this.on(name, handler);
 
